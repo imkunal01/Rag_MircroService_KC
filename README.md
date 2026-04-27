@@ -1,4 +1,4 @@
-# RAG_kc — RAG-Powered Product Recommendation API
+# RAG-Powered Product Recommendation API
 
 A Retrieval-Augmented Generation (RAG) backend built with **FastAPI** that returns personalised product recommendations based on natural-language queries.
 
