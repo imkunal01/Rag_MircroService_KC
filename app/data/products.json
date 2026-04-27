@@ -4,6 +4,8 @@
     "name": "Wireless Noise-Cancelling Headphones",
     "category": "Electronics",
     "price": 299.99,
+    "stock": 42,
+    "rating": 4.7,
     "description": "Premium over-ear headphones with active noise cancellation, 30-hour battery life, and foldable design.",
     "tags": ["audio", "wireless", "noise-cancelling", "bluetooth"]
   },
@@ -12,6 +14,8 @@
     "name": "Ergonomic Office Chair",
     "category": "Furniture",
     "price": 449.00,
+    "stock": 18,
+    "rating": 4.5,
     "description": "Fully adjustable mesh chair with lumbar support, armrests, and breathable back panel for all-day comfort.",
     "tags": ["ergonomic", "office", "chair", "comfort"]
   },
@@ -20,6 +24,8 @@
     "name": "Mechanical Keyboard",
     "category": "Electronics",
     "price": 129.99,
+    "stock": 75,
+    "rating": 4.6,
     "description": "Compact TKL mechanical keyboard with Cherry MX switches, RGB backlighting, and USB-C connectivity.",
     "tags": ["keyboard", "mechanical", "rgb", "gaming"]
   },
@@ -28,6 +34,8 @@
     "name": "Standing Desk",
     "category": "Furniture",
     "price": 649.00,
+    "stock": 10,
+    "rating": 4.8,
     "description": "Electric height-adjustable standing desk with memory presets, cable management tray, and solid bamboo top.",
     "tags": ["desk", "standing", "ergonomic", "home-office"]
   },
@@ -36,7 +44,109 @@
     "name": "4K Webcam",
     "category": "Electronics",
     "price": 89.99,
+    "stock": 55,
+    "rating": 4.3,
     "description": "Ultra-HD webcam with built-in stereo microphone, auto-focus, and low-light correction for video calls.",
     "tags": ["webcam", "4k", "video", "streaming"]
+  },
+  {
+    "id": "P006",
+    "name": "USB-C Docking Station",
+    "category": "Electronics",
+    "price": 179.99,
+    "stock": 30,
+    "rating": 4.4,
+    "description": "12-in-1 docking station with dual 4K HDMI, Gigabit Ethernet, 100W PD charging, and USB-A/C ports.",
+    "tags": ["dock", "usb-c", "hub", "monitor"]
+  },
+  {
+    "id": "P007",
+    "name": "LED Desk Lamp",
+    "category": "Home & Office",
+    "price": 49.99,
+    "stock": 120,
+    "rating": 4.2,
+    "description": "Touch-control LED lamp with 5 colour temperatures, 10 brightness levels, USB charging port, and memory function.",
+    "tags": ["lamp", "led", "lighting", "desk"]
+  },
+  {
+    "id": "P008",
+    "name": "Wireless Charging Pad",
+    "category": "Electronics",
+    "price": 34.99,
+    "stock": 200,
+    "rating": 4.1,
+    "description": "15W Qi-certified fast wireless charger compatible with iPhone, Samsung, and AirPods with anti-slip surface.",
+    "tags": ["charger", "wireless", "qi", "fast-charge"]
+  },
+  {
+    "id": "P009",
+    "name": "Portable Bluetooth Speaker",
+    "category": "Electronics",
+    "price": 79.99,
+    "stock": 65,
+    "rating": 4.5,
+    "description": "360° surround sound Bluetooth 5.3 speaker, IPX7 waterproof, 20-hour playback, USB-C rechargeable.",
+    "tags": ["speaker", "bluetooth", "waterproof", "audio"]
+  },
+  {
+    "id": "P010",
+    "name": "Smart Fitness Tracker",
+    "category": "Wearables",
+    "price": 119.99,
+    "stock": 88,
+    "rating": 4.3,
+    "description": "24/7 heart rate and SpO2 monitor, sleep tracking, GPS, 7-day battery, and 50m water resistance.",
+    "tags": ["fitness", "smartwatch", "health", "gps"]
+  },
+  {
+    "id": "P011",
+    "name": "Noise-Isolating Earbuds",
+    "category": "Electronics",
+    "price": 59.99,
+    "stock": 140,
+    "rating": 4.0,
+    "description": "In-ear wired earbuds with silicone ear tips, inline remote, and high-fidelity drivers for immersive listening.",
+    "tags": ["earbuds", "wired", "audio", "noise-isolating"]
+  },
+  {
+    "id": "P012",
+    "name": "Monitor Light Bar",
+    "category": "Home & Office",
+    "price": 39.99,
+    "stock": 95,
+    "rating": 4.6,
+    "description": "USB-powered screen bar with asymmetric optical design to reduce glare, touch dimmer, and colour temperature control.",
+    "tags": ["lighting", "monitor", "desk", "eye-care"]
+  },
+  {
+    "id": "P013",
+    "name": "Laptop Stand",
+    "category": "Accessories",
+    "price": 29.99,
+    "stock": 160,
+    "rating": 4.4,
+    "description": "Adjustable aluminium laptop stand with 6 height levels, anti-slip pads, and foldable design for portability.",
+    "tags": ["laptop", "stand", "ergonomic", "aluminium"]
+  },
+  {
+    "id": "P014",
+    "name": "Mesh Wi-Fi System (3-Pack)",
+    "category": "Networking",
+    "price": 249.99,
+    "stock": 22,
+    "rating": 4.7,
+    "description": "Tri-band mesh Wi-Fi 6 system covering up to 5,400 sq ft with parental controls and automatic updates.",
+    "tags": ["wifi", "mesh", "networking", "wifi-6"]
+  },
+  {
+    "id": "P015",
+    "name": "Air Purifier",
+    "category": "Home & Office",
+    "price": 159.99,
+    "stock": 35,
+    "rating": 4.5,
+    "description": "3-stage HEPA filtration covering 500 sq ft, real-time air quality display, whisper-quiet sleep mode.",
+    "tags": ["air-purifier", "hepa", "home", "health"]
   }
 ]

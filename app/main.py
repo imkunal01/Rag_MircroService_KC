@@ -1,7 +1,17 @@
+import uvicorn
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 
 from app.api.routes import router
+
+load_dotenv()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+)
 
 # ---------------------------------------------------------------------------
 # Application factory
@@ -31,7 +41,7 @@ app.add_middleware(
 # Routers
 # ---------------------------------------------------------------------------
 
-app.include_router(router, prefix="/api/v1")
+app.include_router(router, prefix="/api")
 
 
 # ---------------------------------------------------------------------------
@@ -52,3 +62,11 @@ async def health():
         "version": app.version,
         "service": app.title,
     }
+
+
+# ---------------------------------------------------------------------------
+# Dev entrypoint  (python -m app.main)
+# ---------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)

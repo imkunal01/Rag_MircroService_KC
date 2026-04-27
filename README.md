@@ -88,6 +88,14 @@ Interactive docs: **http://127.0.0.1:8000/docs**
 Create a `.env` file in the project root (never commit this):
 
 ```env
-# Example — will be used from Phase 1 onwards
-# OPENAI_API_KEY=sk-...
+# LLM provider (Gemini)
+GEMINI_API_KEY=your_key_here
+GEMINI_MODEL=gemini-flash-latest
+
+# External product backend API (required for products endpoints)
+PRODUCTS_API_URL=http://localhost:5000/api/products
+PRODUCTS_API_TIMEOUT_SECONDS=2.0
+PRODUCTS_SYNC_INTERVAL_SECONDS=30
 ```
+
+If `PRODUCTS_API_URL` is not set or unreachable, `/api/products` and related recommendation flows return `503 Service Unavailable` and log an error.
