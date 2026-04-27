@@ -1,0 +1,42 @@
+[
+  {
+    "id": "P001",
+    "name": "Wireless Noise-Cancelling Headphones",
+    "category": "Electronics",
+    "price": 299.99,
+    "description": "Premium over-ear headphones with active noise cancellation, 30-hour battery life, and foldable design.",
+    "tags": ["audio", "wireless", "noise-cancelling", "bluetooth"]
+  },
+  {
+    "id": "P002",
+    "name": "Ergonomic Office Chair",
+    "category": "Furniture",
+    "price": 449.00,
+    "description": "Fully adjustable mesh chair with lumbar support, armrests, and breathable back panel for all-day comfort.",
+    "tags": ["ergonomic", "office", "chair", "comfort"]
+  },
+  {
+    "id": "P003",
+    "name": "Mechanical Keyboard",
+    "category": "Electronics",
+    "price": 129.99,
+    "description": "Compact TKL mechanical keyboard with Cherry MX switches, RGB backlighting, and USB-C connectivity.",
+    "tags": ["keyboard", "mechanical", "rgb", "gaming"]
+  },
+  {
+    "id": "P004",
+    "name": "Standing Desk",
+    "category": "Furniture",
+    "price": 649.00,
+    "description": "Electric height-adjustable standing desk with memory presets, cable management tray, and solid bamboo top.",
+    "tags": ["desk", "standing", "ergonomic", "home-office"]
+  },
+  {
+    "id": "P005",
+    "name": "4K Webcam",
+    "category": "Electronics",
+    "price": 89.99,
+    "description": "Ultra-HD webcam with built-in stereo microphone, auto-focus, and low-light correction for video calls.",
+    "tags": ["webcam", "4k", "video", "streaming"]
+  }
+]
