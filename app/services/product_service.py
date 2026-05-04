@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 import time
 from typing import List, Optional
 from urllib import error, request
@@ -23,6 +24,13 @@ _products: List[dict] = []
 _last_remote_sync_ts: float = 0.0
 logger = logging.getLogger(__name__)
 
+_CATEGORY_HINTS: dict[str, set[str]] = {
+    "Electronics": {"phone", "mobile", "charger", "inverter", "battery", "led", "tv", "camera"},
+    "Appliances": {"fan", "exhaust", "ac", "cooler", "heater", "mixer", "kettle", "fridge"},
+    "Home & Office": {"desk", "chair", "lamp", "office", "storage", "organizer", "furniture"},
+    "Accessories": {"cable", "case", "cover", "adapter", "mount", "stand"},
+}
+
 
 class ProductSourceUnavailableError(RuntimeError):
     """Raised when the external product source cannot be reached."""
@@ -35,6 +43,65 @@ def _coerce_product_dict(item: dict) -> Optional[dict]:
     except Exception:
         return None
     return product.model_dump()
+
+
+def _extract_category(item: dict) -> str:
+    """Extract category from alternate upstream fields."""
+    raw_category = item.get("category")
+    if isinstance(raw_category, dict):
+        return raw_category.get("name") or "Uncategorized"
+    if isinstance(item.get("Category"), dict):
+        return item["Category"].get("name") or "Uncategorized"
+    if isinstance(raw_category, str) and raw_category.strip():
+        return raw_category.strip()
+    return "Uncategorized"
+
+
+def _infer_category_from_text(tags: list[str], name: str) -> str:
+    """Infer a stable category when upstream category metadata is missing."""
+    tokens = set(re.findall(r"[a-z0-9]+", " ".join(tags + [name]).lower()))
+    if not tokens:
+        return "Uncategorized"
+
+    best_category = "Uncategorized"
+    best_score = 0
+    for category, hints in _CATEGORY_HINTS.items():
+        score = len(tokens & hints)
+        if score > best_score:
+            best_score = score
+            best_category = category
+
+    return best_category
+
+
+def _normalize_external_item(item: dict, *, index: int) -> dict:
+    """Map heterogeneous upstream product fields to ProductOut-compatible shape."""
+    raw_tags = item.get("tags")
+    tags = [str(tag) for tag in raw_tags] if isinstance(raw_tags, list) else []
+
+    name = str(item.get("name") or "Unnamed Product")
+    category = _extract_category(item)
+    if category == "Uncategorized":
+        category = _infer_category_from_text(tags, name)
+
+    raw_description = item.get("description")
+    description = raw_description.strip() if isinstance(raw_description, str) and raw_description.strip() else "No description available."
+
+    price = item.get("price")
+    if price is None:
+        price = item.get("retailer_price")
+
+    normalized = {
+        "id": str(item.get("id") or item.get("_id") or item.get("slug") or f"EXT-{index}"),
+        "name": name,
+        "category": str(category),
+        "price": float(price) if price is not None else 0.0,
+        "stock": int(item.get("stock") or 0),
+        "rating": float(item.get("rating") or item.get("average_rating") or 0.0),
+        "description": description,
+        "tags": tags,
+    }
+    return normalized
 
 
 def _fetch_remote_products() -> Optional[List[dict]]:
@@ -57,19 +124,22 @@ def _fetch_remote_products() -> Optional[List[dict]]:
         logger.error("Invalid JSON received from external product API '%s': %s", _PRODUCTS_API_URL, exc)
         return None
 
-    # Accept either a raw list or an envelope with a products key.
+    # Accept either a raw list or common envelope keys from upstream services.
     if isinstance(payload, list):
         items = payload
     elif isinstance(payload, dict) and isinstance(payload.get("products"), list):
         items = payload["products"]
+    elif isinstance(payload, dict) and isinstance(payload.get("items"), list):
+        items = payload["items"]
     else:
         logger.error("External product API '%s' returned unsupported payload shape.", _PRODUCTS_API_URL)
         return None
 
     normalized: List[dict] = []
-    for item in items:
+    for index, item in enumerate(items, start=1):
         if isinstance(item, dict):
-            parsed = _coerce_product_dict(item)
+            mapped = _normalize_external_item(item, index=index)
+            parsed = _coerce_product_dict(mapped)
             if parsed is not None:
                 normalized.append(parsed)
     return normalized

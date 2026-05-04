@@ -4,9 +4,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
-from app.api.routes import router
-
 load_dotenv()
+
+from app.api.routes import router
 
 logging.basicConfig(
     level=logging.INFO,

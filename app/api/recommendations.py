@@ -12,17 +12,23 @@ from fastapi import APIRouter, HTTPException, status
 from app.models.schema import RecommendRequest, RecommendResponse
 from app.services import recommendation_service
 
-router = APIRouter(prefix="/recommend", tags=["Recommendations"])
+router = APIRouter(tags=["Recommendations"])
 
 
 @router.post(
-    "",
+    "/recommend",
     response_model=RecommendResponse,
     summary="Recommend products from a natural-language query",
     description=(
         "Parses structured filters (category/price), filters candidates, and "
         "applies hybrid ranking (semantic + lexical + intent signals)."
     ),
+)
+@router.post(
+    "/recommendation",
+    response_model=RecommendResponse,
+    summary="Recommend products from a natural-language query (alias)",
+    description="Backward-compatible alias for /api/recommend.",
 )
 async def recommend(payload: RecommendRequest):
     try:

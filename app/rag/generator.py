@@ -107,6 +107,37 @@ def _call_gemini(prompt: str, *, timeout_seconds: int = 20) -> str:
         return ""
 
 
+def gemini_config_status() -> dict:
+    """Return whether Gemini credentials are configured."""
+    api_key = os.getenv("GEMINI_API_KEY")
+    model = os.getenv("GEMINI_MODEL", "gemini-flash-latest")
+    configured = bool(api_key and api_key.strip())
+    return {
+        "provider": "gemini",
+        "model": model,
+        "configured": configured,
+        "message": "Gemini API key is configured." if configured else "GEMINI_API_KEY is missing.",
+    }
+
+
+def gemini_live_status(*, timeout_seconds: int = 10) -> dict:
+    """Perform a lightweight live ping against Gemini and report status."""
+    status = gemini_config_status()
+    if not status["configured"]:
+        status["working"] = False
+        return status
+
+    text = _call_gemini("Reply with OK.", timeout_seconds=timeout_seconds)
+    if text:
+        status["working"] = True
+        status["message"] = "Gemini API responded successfully."
+        status["response_preview"] = truncate_text(text, 80)
+    else:
+        status["working"] = False
+        status["message"] = "Gemini API request failed or returned an empty response."
+    return status
+
+
 def generate_answer(query: str, products: list[ProductOut]) -> str:
     """Generate a grounded natural-language recommendation answer."""
     if not products:
