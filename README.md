@@ -45,7 +45,7 @@ backend/
 ### 1. Create & activate a virtual environment
 
 ```bash
-python -m venv venv
+python -m venv .venv
 
 # Windows
 venv\Scripts\activate

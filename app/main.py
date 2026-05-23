@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 from app.api.routes import router
+from app.rag.pinecone_store import get_pinecone_store
 
 load_dotenv()
 
@@ -45,6 +46,16 @@ app.include_router(router, prefix="/api")
 
 
 # ---------------------------------------------------------------------------
+# Startup validation
+# ---------------------------------------------------------------------------
+
+@app.on_event("startup")
+async def startup_validation():
+    """Fail fast when required Pinecone configuration or connectivity is invalid."""
+    get_pinecone_store().init()
+
+
+# ---------------------------------------------------------------------------
 # Root health-check
 # ---------------------------------------------------------------------------
 
@@ -56,11 +67,26 @@ async def root():
 
 @app.get("/health", tags=["Health"])
 async def health():
-    """Detailed health-check endpoint."""
+    """Liveness probe for the API process."""
     return {
         "status": "healthy",
         "version": app.version,
         "service": app.title,
+    }
+
+
+@app.get("/health/deps", tags=["Health"])
+async def dependency_health():
+    """Dependency health-check endpoint."""
+    pinecone = get_pinecone_store().health_check()
+    status_value = "healthy" if pinecone["status"] == "healthy" else "degraded"
+    return {
+        "status": status_value,
+        "version": app.version,
+        "service": app.title,
+        "dependencies": {
+            "pinecone": pinecone,
+        },
     }
 
 

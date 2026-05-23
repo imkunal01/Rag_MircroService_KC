@@ -7,6 +7,7 @@ python-dotenv==1.0.1
 # Phase 1+ — RAG pipeline (uncomment as you progress)
 sentence-transformers==3.0.0; python_version < "3.13"
 faiss-cpu==1.8.0; python_version < "3.13"
+pinecone>=7.0.0,<8.0.0
 # chromadb==0.5.0
 # langchain==0.2.0
 # langchain-community==0.2.0

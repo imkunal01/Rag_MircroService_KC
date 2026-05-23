@@ -8,12 +8,14 @@ Mounted under the /api prefix in main.py, so effective paths are:
 
 from fastapi import APIRouter
 
+from app.api.admin import router as admin_router
 from app.api.products import router as products_router
 from app.api.recommendations import router as recommendations_router
 
 router = APIRouter()
 
 # Sub-routers
+router.include_router(admin_router)
 router.include_router(products_router)
 router.include_router(recommendations_router)
 
